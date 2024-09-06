@@ -1,28 +1,31 @@
-f_1 = open('files/1.txt', 'r', encoding='utf-8').readlines()
-f_2 = open('files/2.txt', 'r', encoding='utf-8').readlines()
-f_3 = open('files/3.txt', 'r', encoding='utf-8').readlines()
+import os
 
-f_1 = [i.rstrip() for i in f_1]
-f_2 = [i.rstrip() for i in f_2]
-f_3 = [i.rstrip() for i in f_3]
+def open_file(files_name_list):
+  result_str = []
 
-sorted_len_list = sorted([['1.txt', f_1], ['2.txt', f_2], ['3.txt', f_3]], key=lambda x: len(x[1]))
+  for file_name in files_name_list:
+    file = open(f'files/task_2_files/{file_name}', 'r', encoding='utf-8').readlines()
+    file = [i.rstrip() for i in file]
+    
+    result_str.append([file_name, file])
 
-print(f'{sorted_len_list[0][0]}\n'
-      f'{len(sorted_len_list[0][1])}')
-for i in range(len(sorted_len_list[0][1])):
-  print(sorted_len_list[0][1][i])
+  return result_str
 
-print('\n')
+def sorted_file(str_list):
+  return sorted(str_list, key=lambda x: len(x[1]))
 
-print(f'{sorted_len_list[1][0]}\n'
-      f'{len(sorted_len_list[1][1])}')
-for i in range(len(sorted_len_list[1][1])):
-  print(sorted_len_list[1][1][i])
+def print_files(file):
+  for file_list in file:
+    file_name = file_list[0]
+    print(f'{file_name}\n'
+          f'{len(file_list[1])}')
+    
+    for str in file_list[1]:
+      print(f'{str}')
 
-print('\n')
-
-print(f'{sorted_len_list[2][0]}\n'
-      f'{len(sorted_len_list[2][1])}')
-for i in range(len(sorted_len_list[2][1])):
-  print(sorted_len_list[2][1][i])
+if __name__ == "__main__":
+  files_name = os.listdir('files/task_2_files')
+  file = open_file(files_name)
+  sorted_file = sorted_file(file)
+  print_files(sorted_file)
+  
